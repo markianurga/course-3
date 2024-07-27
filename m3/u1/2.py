@@ -1,9 +1,9 @@
 import pandas as pd
-df = pd.read_csv('GoogleApps.csv')
-
+df = pd.read_csv('m3/u1/GoogleApps.csv')
+#print(df["Size"].max())
 # Скільки коштує (Price) найдешевший платний додаток (Type == 'Paid)?
-
-
+print(df[df["Type"]== 'Paid']["Price"].min())
+print(df[df["Price"] >0]["Price"].min())
 # Чому дорівнює медіанна (median) кількість установок (Installs)
 # додатків із категорії (Category) "ART_AND_DESIGN"?
 

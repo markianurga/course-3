@@ -19,7 +19,12 @@ print(df.info())
 # Обчисли, скільки доларів розробники заробили на кожному платному додатку
 
 # Чому дорівнює максимальний дохід ('Profit') серед платних додатків (Type == 'Paid')?
-
+def mmo(he):
+    return he.split(';')
+df['Genres'] = df['Genres'].apply(mmo)
+df['len Ghrec'] = df['Genres'].apply(len)
+print(df.info())
+print(df['len Ghrec'])
 # Створи новий стовпець, у якому зберігатиметься кількість жанрів. Назви його 'Number of genres'
 
 # Яка максимальна кількість жанрів (Number of genres) зберігається в датасеті?

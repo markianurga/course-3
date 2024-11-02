@@ -34,12 +34,28 @@ class Hero:
         base.accept('q',self.turn_left)
         base.accept('e-repeat',self.turn_right)
         base.accept('q-repeat',self.turn_left)
-#        base.accept('w',self.changeView)
-#        base.accept('a',self.changeView)
-#        base.accept('s',self.changeView)
-#        base.accept('d',self.changeView)
+        base.accept('w',self.forward)
+        base.accept('a',self.left)
+        base.accept('s',self.back)
+        base.accept('d',self.right)
+        base.accept('w-repeat',self.forward)
+        base.accept('a-repeat',self.left)
+        base.accept('s-repeat',self.back)
+        base.accept('d-repeat',self.right)
         
         
+    def forward(self):
+        angle = (self.model.getH() + 180) % 360
+        self.move_to(angle)
+    def back(self):
+        angle = (self.model.getH() + 0) % 360
+        self.move_to(angle)
+    def left(self):
+        angle = (self.model.getH() + 90) % 360
+        self.move_to(angle)
+    def right(self):
+        angle = (self.model.getH() + 270) % 360
+        self.move_to(angle) 
     def changeView(self):  
         if self.comeraOn:
             self.cameraAp()
@@ -60,16 +76,44 @@ class Hero:
         
     
     def just_move(self, angle):
-        pass
+        pos = self.look_at(angle)
+        self.model.setPos(pos)
     
     def try_move(self, angle):
         pass
     
     def look_at(self, angle):
-        pass
+        x = self.model.getX()
+        x = round(x)
+        y = self.model.getY()
+        y = round(y)
+        z = self.model.getZ()
+        z = round(z)
+        
+        dx, dy = self.check_dir(angle)
+        
+        return x + dx, y + dy, z
     
     def check_dir(self, angle):
-        pass
+        if 0 <= angle < 20:
+            return 0, -1
+        elif 20 <= angle < 65:
+            return 1, -1
+        elif 65 <= angle < 110:
+            return 1, 0
+        elif 110 <= angle < 155:
+            return 1, 1
+        elif 155 <= angle < 200:
+            return 0, 1
+        elif 200 <= angle < 240:
+            return -1, 1
+        elif 240 <= angle < 290:
+            return -1, 0
+        elif 290 <= angle < 335:
+            return -1, -1
+        elif 335 <= angle <= 360:
+            return 0, -1
+        
     
     def move_to(self, angle):
         if self.mode == True:

@@ -29,6 +29,8 @@ class Hero:
 
        
     def accept_events(self):
+        base.accept('z',self.changeMode)
+        
         base.accept('c',self.changeView)
         base.accept('e',self.turn_right)
         base.accept('q',self.turn_left)
@@ -42,8 +44,15 @@ class Hero:
         base.accept('a-repeat',self.left)
         base.accept('s-repeat',self.back)
         base.accept('d-repeat',self.right)
-        
-        
+        base.accept('space',self.up)
+        base.accept('shift',self.down)
+        base.accept('space-repeat',self.up)
+        base.accept('shift-repeat',self.down)
+    
+    def up(self):
+        self.model.setZ(self.model.getZ( )+1)
+    def down(self):
+        self.model.setZ(self.model.getZ( )-1)
     def forward(self):
         angle = (self.model.getH() + 180) % 360
         self.move_to(angle)
@@ -51,10 +60,10 @@ class Hero:
         angle = (self.model.getH() + 0) % 360
         self.move_to(angle)
     def left(self):
-        angle = (self.model.getH() + 90) % 360
+        angle = (self.model.getH() + 270) % 360
         self.move_to(angle)
     def right(self):
-        angle = (self.model.getH() + 270) % 360
+        angle = (self.model.getH() + 90) % 360
         self.move_to(angle) 
     def changeView(self):  
         if self.comeraOn:
@@ -80,7 +89,15 @@ class Hero:
         self.model.setPos(pos)
     
     def try_move(self, angle):
-        pass
+        pos = self.look_at(angle)
+        if self.land.isEmpty(pos):
+            pos = self.land.findghestEmpty(pos)
+            self.model.setPos(pos)
+        else:
+            pos = pos[0], pos[1], pos[2] +1
+            if self.land.isEmpty(pos):
+                self.model.setPos(pos)
+
     
     def look_at(self, angle):
         x = self.model.getX()
@@ -121,3 +138,8 @@ class Hero:
         else:
             self.try_move(angle)
     
+    def changeMode(self):
+        if self.mode == True:
+            self.mode = False
+        else:
+            self.mode = True

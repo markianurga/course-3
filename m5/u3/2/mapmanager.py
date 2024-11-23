@@ -42,3 +42,20 @@ class Mapmanager:
                         self.addblock((x, y, z0))
                     x = x + 1
                 y = y + 1
+                
+    def delblock(self, pos):
+        blocks = self.findBloks(pos)
+        print(543)
+        for block in blocks:
+            block.removeNode()
+            
+    def bildblock(self, pos):
+        x,y,z = pos
+        nu = self.findghestEmpty(pos)
+        if nu[2] <= z+1:
+            self.addblock(nu)
+            
+    def delblockfrom(self, pos):
+        x,y,z = self.findghestEmpty(pos)
+        pos1 = x,y,z-1
+        self.delblock(pos1)

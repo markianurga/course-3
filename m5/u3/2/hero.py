@@ -6,6 +6,7 @@ class Hero:
         self.model =  loader.loadModel('ant')
         self.model.reparentTo(render)
         self.model.setPos(pos)
+        self.model.setH(180)
         self.model.setScale(0.66)
         
         self.camerabind()
@@ -31,6 +32,8 @@ class Hero:
     def accept_events(self):
         base.accept('z',self.changeMode)
         
+        base.accept('f',self.build)
+        base.accept('b',self.destroy)
         base.accept('c',self.changeView)
         base.accept('e',self.turn_right)
         base.accept('q',self.turn_left)
@@ -143,3 +146,22 @@ class Hero:
             self.mode = False
         else:
             self.mode = True
+            
+    def build(self):
+        angle = self.model.getH()%360
+        pos = self.look_at(angle)
+        if self.mode == True:
+            self.land.addblock(pos)
+        else:
+            self.land.bildblock(pos)
+    
+    def destroy(self):
+        angle = self.model.getH()%360
+        pos = self.look_at(angle)
+        print(999)
+        if self.mode == True:
+            self.land.delblock(pos)
+        else:
+            self.land.delblockfrom(pos)
+    
+    

@@ -86,8 +86,15 @@ def add_quiz():
                   VALUES (?)''', list_q)
     close()
 
-
-
+def getquiz():
+    open()
+    
+    quize = "SELECT * FROM quiz"
+    do (quize)
+    rez = cursor.fetchall()
+    close()
+    return rez
+    
 
 
 

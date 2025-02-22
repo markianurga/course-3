@@ -1,0 +1,7 @@
+<h1> {{quize}} </h1>
+
+<select name="quiz" id="quiz">
+    {% for id, name in quize %}
+    <option value="{{ id }}">{{ name }}</option>
+    {% endfor %}
+</select>

@@ -95,9 +95,37 @@ def getquiz():
     close()
     return rez
     
+def getQuestion(question_id, quiz_id):
+    open()
+    query = ''' 
+    SELECT quiz_content.id, question.Question, question.answer, question.wrong1, question.wrong2, question.wrong3
+    FROM question, quiz_content
+    WHERE quiz_content.question_id == question.id
+    AND quiz_content.id > ? 
+    AND quiz_content.quiz_id == ?
+    ORDER BY quiz_content.id
+    '''
+    cursor.execute(query,[question_id, quiz_id])
+    rezalt = cursor.fetchone()
+    close()
+    return rezalt
 
-
-
+def checkAnswer(question_id, answer_text):
+    open()
+    query =  '''
+        SELECT answer FROM question
+        WHERE id == ?
+    '''
+    
+    cursor.execute(query,[question_id])
+    
+    allQues = cursor.fetchone()
+    close()
+    
+    if allQues[0] == answer_text:
+        return True
+    else:
+        return False
 
 
 
